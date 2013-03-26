@@ -1,0 +1,221 @@
+{% extends 'layout.html' %}
+
+
+{% set crumbs = (('Docs',), ('Templates',)) %}
+{% set toc = (
+    ('Data', (
+        ('Globals', (
+            ('archives',),
+            ('posts',),
+            ('site',),
+            ('tags',)
+        )),
+        ('Locals', (
+            ('archive',),
+            ('post',),
+            ('tag',)
+        ))
+    )),
+    ('Filters', (
+        ('absolutize',),
+        ('date',)
+    )),
+    ('Helpers', (
+        ('get_asset',),
+        ('get_url',)
+    ))
+) %}
+
+{% block content %}
+    <h1 id="data">Data</h1>
+    <h2 id="data.globals">Globals</h2>
+    <dl class="api">
+        <dt id="data.globals.archives"><strong>archives</strong></dt>
+        <dd>
+            <p>A dictionary of post <a href="#data.locals.archive">archive</a> data.</p>
+            <pre><code data-lang="jinja">{% raw %}{% for year, archive in archives %}
+    &lt;h1&gt;{{ year }}&lt;/h1&gt;
+    &lt;ul&gt;
+        {% for month, posts in archive.months %}
+            &lt;li&gt;
+                &lt;h1&gt;{{ month }}&lt;/h1&gt;
+                &lt;ul&gt;
+                    {% for post in posts %}
+                        &lt;li&gt;{{ post.timestamp|date('%d') }} &ndash; &lt;a href=&quot;{{ get_url(post.url) }}&quot;&gt;{{ post.title }}&lt;/a&gt;&lt;/li&gt;
+                    {% endfor %}
+                &lt;/ul&gt;
+            &lt;/li&gt;
+        {% endfor %}
+    &lt;/ul&gt;
+{% endfor %}{% endraw %}</code></pre>
+            <div class="notice notice-warning">
+                <p>Iterating over <code>archives</code> yields a tuple of the year and a dictionary of that year's data.</p>
+            </div>
+        </dd>
+        
+        <dt id="data.globals.posts"><strong>posts</strong></dt>
+        <dd>A list of all <a href="#data.locals.post">posts</a> in reverse chronological order.</dd>
+        
+        <dt id="data.globals.site"><strong>site</strong></dt>
+        <dd>A dictionary of the site's <a href="{{ get_url('docs/config/') }}">config</a> data.</dd>
+        
+        <dt id="data.globals.tags"><strong>tags</strong></dt>
+        <dd>
+            <p>A dictionary of all <a href="#data.locals.tag">tags</a> sorted by count <em>(descending)</em> then name <em>(ascending, case insensitive)</em>.</p>
+            <pre><code data-lang="jinja">{% raw %}{% for name, tag in tags %}
+    &lt;li&gt;&lt;a href=&quot;{{ get_url(tag.url) }}&quot;&gt;{{ name }} ({{ tag.count }})&lt;/a&gt;&lt;/li&gt;
+{% endfor %}{% endraw %}</code></pre>
+            <div class="notice notice-warning">
+                <p>Iterating over <code>tags</code> yields a tuple of the the tag name and a dictionary of that tag's data.</p>
+            </div>
+        </dd>
+    </dl>
+    
+    <h2 id="data.locals">Locals</h1>
+    <dl class="api">
+        <dt id="data.locals.archive"><strong>archive</strong></dt>
+        <dd>
+            <p>A dictionary of archive data.</p>
+            <div class="notice notice-warning">
+                <p>This variable is only available in <code>archive_layout</code>.</p>
+            </div>
+            <dl class="api">
+                <dt id="data.locals.archive.months"><em>archive.</em><strong>months</strong></dt>
+                <dd>
+                    <p>A dictionary of <a href="#data.locals.post">posts</a> sorted by month in reverse chronological order.</p>
+                    <div class="notice notice-warning">
+                        <p>Iterating over <code>months</code> yields a tuple of the month and a list of that month's posts.</p>
+                    </div>
+                </dd>
+                
+                <dt id="data.locals.archive.url"><em>archive.</em><strong>url</strong></dt>
+                <dd>The URL to the year's archive page based on <code>archives_url</code>.</dd>
+                
+                <dt id="data.locals.archive.year"><em>archive.</em><strong>year</strong></dt>
+                <dd>The year of the archive.</dd>
+            </dl>
+        </dd>
+        
+        <dt id="data.locals.post"><strong>post</strong></dt>
+        <dd>
+            <p>A dictionary of post data.</p>
+            <div class="notice notice-warning">
+                <p>This variable is only available in a post's <code>layout</code>.</p>
+            </div>
+            <dl class="api">
+                <dt id="data.locals.post.content"><em>post.</em><strong>content</strong></dt>
+                <dd>The body of the post.</dd>
+                
+                <dt id="data.locals.post.date"><em>post.</em><strong>date</strong></dt>
+                <dd>The date of the post formatted according to <code>date_format</code>.</dd>
+                
+                <dt id="data.locals.post.excerpt"><em>post.</em><strong>excerpt</strong></dt>
+                <dd>The contents of the first <code>&lt;p&gt;</code> of <code>content</code>.</dd>
+                
+                <dt id="data.locals.post.tags"><em>post.</em><strong>tags</strong></dt>
+                <dd>A list of tags belonging to the post sorted by name <em>(ascending, case insensitive)</em>.</dd>
+                
+                <dt id="data.locals.post.timestamp"><em>post.</em><strong>timestamp</strong></dt>
+                <dd>The timestamp of the post.</dd>
+                
+                <dt id="data.locals.post.url"><em>post.</em><strong>url</strong></dt>
+                <dd>The URL of the post formatted according to <code>posts_url</code>.</dd>
+            </dl>
+        </dd>
+        
+        <dt id="data.locals.tag"><strong>tag</strong></dt>
+        <dd>
+            <p>A dictionary of tag data.</p>
+            <div class="notice notice-warning">
+                <p>This variable is only available in <code>tag_layout</code>.</p>
+            </div>
+            <dl class="api">
+                <dt id="data.locals.tag.archives"><em>tag.</em><strong>archives</strong></dt>
+                <dd>An <a href="#data.globals.archives">archive</a> containing only posts belonging to the tag.</dd>
+                
+                <dt id="data.locals.tag.count"><em>tag.</em><strong>count</strong></dt>
+                <dd>The number of posts containing the tag.</dd>
+                
+                <dt id="data.locals.tag.name"><em>tag.</em><strong>name</strong></dt>
+                <dd>The name of the tag.</dd>
+                
+                <dt id="data.locals.tag.posts"><em>tag.</em><strong>posts</strong></dt>
+                <dd>A list of <a href="#data.locals.post">posts</a> belonging to the tag in reverse chronological order.</dd>
+                
+                <dt id="data.locals.tag.url"><em>tag.</em><strong>url</strong></dt>
+                <dd>The URL to the tag page based on <code>tags_url</code>.</dd>
+            </dl>
+        </dd>
+    </dl>
+    
+    
+    <h1 id="filters">Filters</h1>
+    <dl class="api">
+        <dt id="filters.absolutize"><strong>absolutize(</strong><em>html</em><strong>)</strong></dt>
+        <dd>
+            <p>Attempts to convert all URLs in the supplied HTML to absolute URLs.</p>
+            <div class="notice notice-warning">
+                <p>This depends on <code>domain</code> being set.</p>
+            </div>
+            <dl class="api">
+                <dt id="filters.absolutize.html"><strong>html</strong></dt>
+                <dd>The chunk of HTML to convert.</dd>
+            </dl>
+        </dd>
+        
+        <dt id="filters.date"><strong>date(</strong><em>ts, format</em><strong>)</strong></dt>
+        <dd>
+            <p>Returns a formatted date based on the supplied timestamp and format.</p>
+            <pre><code data-lang="jinja">{{ '{{ post.timestamp|date(\'%d %b %Y\') }}' }}</code></pre>
+            <dl class="api">
+                <dt id="filters.date.ts"><strong>ts</strong></dt>
+                <dd>
+                    <p>The timestamp to be formatted.</p>
+                    <div class="notice notice-info">
+                        <p>If <code>None</code>, the current date and time will be used.</p>
+                    </div>
+                </dd>
+                
+                <dt id="filters.date.format"><strong>format</strong></dt>
+                <dd>The desired <a href="http://docs.python.org/library/datetime.html#strftime-and-strptime-behavior">format</a> of <code>timestamp</code>.</dd>
+            </dl>
+        </dd>
+    </dl>
+    
+    
+    <h1 id="helpers">Helpers</h1>
+    <dl class="api">
+        <dt id="helpers.get_asset"><strong>get_asset(</strong><em>asset</em><strong>)</strong></dt>
+        <dd>
+            <p>Returns the URL to the asset based on <code>base_url</code> and <code>assets_url</code>.</p>
+            <pre><code data-lang="jinja">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ '{{ get_asset(\'css/screen.css\') }}' }}&quot; type=&quot;text/css&quot;&gt;</code></pre>
+            <dl class="api">
+                <dt id="helpers.get_asset.asset"><strong>asset</strong></dt>
+                <dd>The requested asset.</dd>
+            </dl>
+        </dd>
+        
+        <dt id="helpers.get_url"><strong>get_url(</strong><em>url, absolute</em><strong>)</strong></dt>
+        <dd>
+            <p>Returns a URL based on <code>base_url</code>.</p>
+            <pre><code data-lang="jinja">&lt;a href=&quot;{{ '{{ get_url(post.url) }}' }}&quot;&gt;{{ '{{ post.title }}' }}&lt;/a&gt;</code></pre>
+            <dl class="api">
+                <dt id="helpers.get_url.url"><strong>url</strong></dt>
+                <dd>
+                    <p>The requested URL.</p>
+                    <div class="notice notice-info">
+                        <p>This parameter is optional. If not supplied, <code>base_url</code> will be returned.</p>
+                    </div>
+                </dd>
+                
+                <dt id="helpers.get_url.absolute"><strong>absolute</strong></dt>
+                <dd>
+                    <p>Whether or not the returned URL should be an absolute URL.</p>
+                    <div class="notice notice-warning">
+                        <p>This depends on <code>domain</code> being set.</p>
+                    </div>
+                </dd>
+            </dl>
+        </dd>
+    </dl>
+{% endblock %}

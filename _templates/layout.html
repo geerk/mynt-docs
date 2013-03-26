@@ -1,0 +1,78 @@
+{% import 'macros.html' as _ -%}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% include 'page.header.html' %}
+    
+    {{ _.title(title, crumbs, ignore) }}
+</head>
+
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <div id="header">
+                <h1><a href="{{ get_url() }}">{{ site.title }}</a></h1>
+                {% if site.subtitle %}<h2>{{ site.subtitle }}</h2>{% endif %}
+            </div>
+            
+            <div class="module module-nav">
+                <ul class="unstyled">
+                    <li>
+                        Docs
+                        
+                        <ul class="unstyled">
+                            <li><a href="{{ get_url('docs/quickstart/') }}">Quickstart</a></li>
+                            <li><a href="{{ get_url('docs/command-line/') }}">Command Line</a></li>
+                            <li><a href="{{ get_url('docs/config/') }}">Config</a></li>
+                            <li><a href="{{ get_url('docs/templates/') }}">Templates</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        Community
+                        
+                        <ul class="unstyled">
+                            <li><a href="https://github.com/Anomareh/mynt">GitHub</a></li>
+                            <li><a href="http://webchat.freenode.net/?channels=mynt">IRC</a></li>
+                            <li><a href="{{ get_url('community/sites/') }}">Sites</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        News
+                        
+                        <ul class="unstyled">
+                            <li><a href="{{ get_url('news/') }}">Latest</a></li>
+                            <li><a href="{{ get_url('news/archives/') }}">Archives</a></li>
+                            <li><a href="{{ get_url('news/feed/') }}">Feed</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        {#{% block toc %}{% endblock %}#}
+        
+        {% if toc %}
+            <ul id="toc">
+                {{ _.toc(toc) }}
+            </ul>
+        {% endif %}
+        
+        {% if crumbs %}
+            <ul id="breadcrumbs">
+                {{ _.breadcrumbs(crumbs) }}
+            </ul>
+        {% endif %}
+        
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <a id="forkme" href="https://github.com/Anomareh/mynt"><img src="{{ get_asset('images/forkme.png') }}" width="149" height="149" alt="Fork me on Github"></a>
+</body>
+</html>

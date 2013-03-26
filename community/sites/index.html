@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+
+{% set crumbs = (('Community',), ('Sites',)) %}
+
+{% block content %}
+    <p>Below is a list of sites that use mynt <em>(some with links to their sources)</em> for people looking for some working examples of mynt sites or are just curious about how people are using mynt.</p>
+    <div class="notice notice-info">
+        <p>If you'd like your site added to this list, either message me (Anomareh) in the mynt <a href="http://webchat.freenode.net/?channels=mynt">IRC channel</a> or send me an <a href="mailto:andrew@mirroredwhite.com">email</a> with the URL to the site as well as a link to it's source if it's publicly available somewhere.</p>
+    </div>
+    
+    <ul class="unstyled sites">
+        <li><a href="http://mynt.mirroredwhite.com/">mynt.mirroredwhite.com</a><span class="sites-source"><a href="https://github.com/Anomareh/mynt-docs">source</a></span></li>
+        <li><a href="http://samesake.com/">samesake.com</a></li>
+        <li><a href="http://hynek.me/">hynek.me</a><span class="sites-source"><a href="https://github.com/hynek/homepage">source</a></span></li>
+        <li><a href="http://dkuntz2.com/">dkuntz2.com</a><span class="sites-source"><a href="https://github.com/dkuntz2/.com">source</a></span></li>
+        <li><a href="http://shamansir.github.com/blog/">shamansir.github.com/blog/</a></li>
+        <li><a href="http://www.roguelynn.com/">roguelynn.com</a><span class="sites-source"><a href="https://github.com/econchick/roguelynn">source</a></span></li>
+        <li><a href="http://cbrueggenolte.de/">cbrueggenolte.de</a></li>
+        <li><a href="http://www.tummy.com/">tummy.com</a></li>
+        <li><a href="http://www.pyladies.com/">pyladies.com</a><span class="sites-source"><a href="https://github.com/pyladies/pyladies">source</a></span></li>
+        <li><a href="http://textray.com/">textray.com</a><span class="sites-source"><a href="https://github.com/david4096/textray.com">source</a></span></li>
+        <li><a href="http://newcoder.io/">newcoder.io</a><span class="sites-source"><a href="https://github.com/econchick/new-coder">source</a></span></li>
+    </ul>
+{% endblock %}
