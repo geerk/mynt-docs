@@ -46,6 +46,9 @@ analytics: UA-27967356-1
 
 archive_layout: archive.html
 archives_url: /news/archives/
+jinja:
+    extensions:
+        - jinja2.ext.i18n
 posts_url: /news/<year>/<month>/<day>/<title>/
 tag_layout: tag.html
 tags_url: /news/archives/

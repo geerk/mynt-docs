@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 
-{% set crumbs = (('Community',), ('Sites',)) %}
+{% set crumbs = ((_('Community'),), (_('Sites'),)) %}
 
 {% block content %}
-    <p>Below is a list of sites that use mynt <em>(some with links to their sources)</em> for people looking for some working examples of mynt sites or are just curious about how people are using mynt.</p>
+    <p>{{ _("Below is a list of sites that use mynt <em>(some with links to their sources)</em> for people looking for some working examples of mynt sites or are just curious about how people are using mynt.") }}</p>
     <div class="notice notice-info">
-        <p>If you'd like your site added to this list, either message me (Anomareh) in the mynt <a href="http://webchat.freenode.net/?channels=mynt">IRC channel</a> or send me an <a href="mailto:andrew@mirroredwhite.com">email</a> with the URL to the site as well as a link to it's source if it's publicly available somewhere.</p>
+        <p>{% trans %}If you'd like your site added to this list, either message me (Anomareh) in the mynt <a href="http://webchat.freenode.net/?channels=mynt">IRC channel</a> or send me an <a href="mailto:andrew@mirroredwhite.com">email</a> with the URL to the site as well as a link to it's source if it's publicly available somewhere.{% endtrans %}</p>
     </div>
     
     <ul class="unstyled sites">
